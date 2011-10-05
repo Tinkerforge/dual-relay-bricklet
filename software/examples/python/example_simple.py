@@ -7,8 +7,8 @@ UID = "xyz" # Change to your UID
 
 import time
 
-from ip_connection import IPConnection
-from bricklet_dual_relay import DualRelay
+from tinkerforge.ip_connection import IPConnection
+from tinkerforge.bricklet_dual_relay import DualRelay
 
 if __name__ == "__main__":
     ipcon = IPConnection(HOST, PORT) # Create ip connection to brickd
