@@ -1,7 +1,3 @@
-// tested with 
-// gcc -lpthread -lrt -o example_simple bricklet_dual_relay.c 
-//     ip_connection.c example_simple.c
-// on Ubuntu
 
 #include <stdio.h>
 
