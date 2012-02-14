@@ -1,4 +1,4 @@
-update=Fr 12 Aug 2011 14:07:11 CEST
+update=Mi 25 Jan 2012 16:19:10 CET
 version=1
 last_client=pcbnew
 [cvpcb]
@@ -11,8 +11,6 @@ LibDir=
 NetType=0
 [cvpcb/libraries]
 EquName1=devcms
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=kicad-libraries
@@ -76,6 +74,8 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=tinkerforge
+[general]
+version=1
 [pcbnew]
 version=1
 PadDrlX=512
@@ -87,12 +87,12 @@ TxtPcbH=600
 TxtModV=600
 TxtModH=600
 TxtModW=120
-VEgarde=100
+VEgarde=0
 DrawLar=150
 EdgeLar=150
 TxtLar=120
 MSegLar=150
-LastNetListRead=dual-relais.net
+LastNetListRead=
 [pcbnew/libraries]
 LibDir=kicad-libraries
 LibName1=sockets
