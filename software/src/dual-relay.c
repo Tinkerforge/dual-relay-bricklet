@@ -86,7 +86,7 @@ void destructor(void) {
     BA->PIO_Configure(&PIN_RELAIS_2, 1);
 }
 
-void tick(void) {
+void tick(uint8_t tick_type) {
 	// Nothing has to be done periodically
 }
 
