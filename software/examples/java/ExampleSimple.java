@@ -11,13 +11,11 @@ public class ExampleSimple {
 	public static void main(String args[]) throws Exception {
 		// Create connection to brickd
 		IPConnection ipcon = new IPConnection(host, port); // Can throw IOException
-
 		BrickletDualRelay dr = new BrickletDualRelay(UID); // Create device object
 
-		// Add device to ip connection
+		// Add device to IP connection
 		ipcon.addDevice(dr); // Can throw IPConnection.TimeoutException
 		// Don't use device before it is added to a connection
-		
 
 		// Turn relays alternating on/off for 10 times with 1 second delay
 		for(int i = 0; i < 10; i++) {
