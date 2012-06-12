@@ -30,6 +30,7 @@ int main() {
 	// Turn relay 1 on and relay 2 off.
 	dual_relay_set_state(&dr, true, false);
 
-	printf("Press ctrl+c to close\n");
-	ipcon_join_thread(&ipcon); // Join mainloop of IP connection
+	printf("Press key to exit\n");
+	getchar();
+	ipcon_destroy(&ipcon);
 }
