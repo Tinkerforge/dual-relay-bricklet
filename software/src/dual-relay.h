@@ -26,6 +26,9 @@
 
 #define TYPE_SET 1
 #define TYPE_GET 2
+#define TYPE_SET_MONOFLOP 3
+#define TYPE_GET_MONOFLOP 4
+#define TYPE_MONOFLOP_DONE 5
 
 typedef struct {
 	uint8_t stack_id;
@@ -55,8 +58,43 @@ typedef struct {
 	bool relay2;
 } __attribute__((__packed__)) GetReturn;
 
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t relay;
+	bool state;
+	uint32_t time;
+} __attribute__((__packed__)) SetMonoflop;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t relay;
+} __attribute__((__packed__)) GetMonoflop;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	bool state;
+	uint32_t time;
+	uint32_t time_remaining;
+} __attribute__((__packed__)) GetMonoflopReturn;
+
+typedef struct {
+	uint8_t stack_id;
+	uint8_t type;
+	uint16_t length;
+	uint8_t relay;
+	bool state;
+} __attribute__((__packed__)) MonoflopDone;
+
 void set(uint8_t com, Set *data);
 void get(uint8_t com, Get *data);
+void set_monoflop(uint8_t com, SetMonoflop *data);
+void get_monoflop(uint8_t com, GetMonoflop *data);
 
 void invocation(uint8_t com, uint8_t *data);
 void constructor(void);

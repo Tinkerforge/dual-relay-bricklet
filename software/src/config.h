@@ -32,14 +32,19 @@
 #define BRICKLET_HARDWARE_NAME "Dual Relay Bricklet 1.0"
 #define BRICKLET_FIRMWARE_VERSION_MAJOR 1
 #define BRICKLET_FIRMWARE_VERSION_MINOR 1
-#define BRICKLET_FIRMWARE_VERSION_REVISION 0
+#define BRICKLET_FIRMWARE_VERSION_REVISION 1
 
 #define INVOCATION_IN_BRICKLET_CODE
 
-#define PIN_RELAIS_1   (BS->pin1_ad)
-#define PIN_RELAIS_2   (BS->pin2_da)
+#define NUM_RELAYS 2
+
+#define PIN_RELAY_1   (BS->pin1_ad)
+#define PIN_RELAY_2   (BS->pin2_da)
 
 typedef struct {
+	uint32_t time[NUM_RELAYS];
+	uint32_t time_remaining[NUM_RELAYS];
+	bool monoflop_callback[NUM_RELAYS];
 } BrickContext;
 
 #endif
