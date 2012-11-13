@@ -1,5 +1,5 @@
 /* dual-relay
- * Copyright (C) 2011 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
  *
  * dual-relay.c: Implementation of Dual Relay Bricklet messages
  *
@@ -27,24 +27,36 @@
 #include "config.h"
 #include "bricklib/utility/util_definitions.h"
 
-void invocation(uint8_t com, uint8_t *data) {
-	switch(((StandardMessage*)data)->type) {
-		case TYPE_SET:
+void invocation(const ComType com, const uint8_t *data) {
+	switch(((MessageHeader*)data)->fid) {
+		case FID_SET: {
 			set(com, (Set*)data);
 			return;
-		case TYPE_GET:
+		}
+
+		case FID_GET: {
 			get(com, (Get*)data);
 			return;
-		case TYPE_SET_MONOFLOP:
+		}
+
+		case FID_SET_MONOFLOP: {
 			set_monoflop(com, (SetMonoflop*)data);
 			return;
-		case TYPE_GET_MONOFLOP:
+		}
+
+		case FID_GET_MONOFLOP: {
 			get_monoflop(com, (GetMonoflop*)data);
 			return;
+		}
+
+		default: {
+			BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_NOT_SUPPORTED, com);
+			return;
+		}
 	}
 }
 
-void set(uint8_t com, Set *data) {
+void set(const ComType com, const Set *data) {
 	if(data->relay1) {
 		PIN_RELAY_1.pio->PIO_SODR = PIN_RELAY_1.mask;
 	} else {
@@ -61,29 +73,29 @@ void set(uint8_t com, Set *data) {
 	BC->time[1] = 0;
 	BC->time_remaining[0] = 0;
 	BC->time_remaining[1] = 0;
+
+	BA->com_return_setter(com, data);
 }
 
-void get(uint8_t com, Get *data) {
-	GetReturn gr = {
-		data->stack_id,
-		data->type,
-		sizeof(GetReturn),
-		PIN_RELAY_1.pio->PIO_ODSR & PIN_RELAY_1.mask,
-		PIN_RELAY_2.pio->PIO_ODSR & PIN_RELAY_2.mask,
-	};
+void get(const ComType com, const Get *data) {
+	GetReturn gr;
+	gr.header        = data->header;
+	gr.header.length = sizeof(GetReturn);
+	gr.relay1        = PIN_RELAY_1.pio->PIO_ODSR & PIN_RELAY_1.mask;
+	gr.relay2        = PIN_RELAY_2.pio->PIO_ODSR & PIN_RELAY_2.mask;
 
 	BA->send_blocking_with_timeout(&gr,
 	                               sizeof(GetReturn),
 	                               com);
 }
 
-void set_monoflop(uint8_t com, SetMonoflop *data) {
+void set_monoflop(const ComType com, const SetMonoflop *data) {
 	if(data->relay != 1 && data->relay != 2) {
-		// TODO: Error?
+		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(MessageHeader));
 		return;
 	}
 
-	const uint8_t relay = data->relay-1;
+	const uint8_t relay = data->relay - 1;
 
 	BC->time[relay] = data->time;
 	BC->time_remaining[relay] = data->time;
@@ -104,21 +116,21 @@ void set_monoflop(uint8_t com, SetMonoflop *data) {
 		}
 	}
 
+	BA->com_return_setter(com, data);
 }
 
-void get_monoflop(uint8_t com, GetMonoflop *data) {
+void get_monoflop(const ComType com, const GetMonoflop *data) {
 	if(data->relay != 1 && data->relay != 2) {
-		// TODO: Error?
+		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(GetMonoflopReturn));
 		return;
 	}
 
-	const uint8_t relay = data->relay-1;
+	const uint8_t relay = data->relay - 1;
 
 	GetMonoflopReturn gfr;
+	gfr.header        = data->header;
+	gfr.header.length = sizeof(GetMonoflopReturn);
 
-	gfr.stack_id      = data->stack_id;
-	gfr.type          = data->type;
-	gfr.length        = sizeof(GetMonoflopReturn);
 	gfr.time = BC->time[relay];
 	gfr.time_remaining = BC->time_remaining[relay];
 	if(data->relay == 1) {
@@ -157,7 +169,7 @@ void destructor(void) {
     BA->PIO_Configure(&PIN_RELAY_2, 1);
 }
 
-void tick(uint8_t tick_type) {
+void tick(const uint8_t tick_type) {
 	if(tick_type & TICK_TASK_TYPE_CALCULATION) {
 		if(BC->time_remaining[0] != 0) {
 			BC->time_remaining[0]--;
@@ -186,13 +198,10 @@ void tick(uint8_t tick_type) {
 
 	if(tick_type & TICK_TASK_TYPE_MESSAGE) {
 		if(BC->monoflop_callback[0]) {
-			MonoflopDone md = {
-				BS->stack_id,
-				TYPE_MONOFLOP_DONE,
-				sizeof(MonoflopDone),
-				1,
-				PIN_RELAY_1.pio->PIO_ODSR & PIN_RELAY_1.mask
-			};
+			MonoflopDone md;
+			BA->com_make_default_header(&md, BS->uid, sizeof(MonoflopDone), FID_MONOFLOP_DONE);
+			md.relay = 1;
+			md.state = PIN_RELAY_1.pio->PIO_ODSR & PIN_RELAY_1.mask;
 
 			BA->send_blocking_with_timeout(&md,
 										   sizeof(MonoflopDone),
@@ -202,13 +211,10 @@ void tick(uint8_t tick_type) {
 		}
 
 		if(BC->monoflop_callback[1]) {
-			MonoflopDone md = {
-				BS->stack_id,
-				TYPE_MONOFLOP_DONE,
-				sizeof(MonoflopDone),
-				2,
-				PIN_RELAY_2.pio->PIO_ODSR & PIN_RELAY_2.mask
-			};
+			MonoflopDone md;
+			BA->com_make_default_header(&md, BS->uid, sizeof(MonoflopDone), FID_MONOFLOP_DONE);
+			md.relay = 2;
+			md.state = PIN_RELAY_2.pio->PIO_ODSR & PIN_RELAY_2.mask;
 
 			BA->send_blocking_with_timeout(&md,
 										   sizeof(MonoflopDone),

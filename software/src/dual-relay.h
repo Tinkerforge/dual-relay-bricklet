@@ -1,5 +1,5 @@
 /* dual-relay
- * Copyright (C) 2011 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
  *
  * dual-relay.h: Implementation of Dual Relay Bricklet messages
  *
@@ -19,86 +19,71 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef DUAL_RELAIS_H
-#define DUAL_RELAIS_H
+#ifndef DUAL_RELAY_H
+#define DUAL_RELAY_H
 
 #include <stdint.h>
+#include "bricklib/com/com_common.h"
 
-#define TYPE_SET 1
-#define TYPE_GET 2
-#define TYPE_SET_MONOFLOP 3
-#define TYPE_GET_MONOFLOP 4
-#define TYPE_MONOFLOP_DONE 5
+#define FID_SET 1
+#define FID_GET 2
+#define FID_SET_MONOFLOP 3
+#define FID_GET_MONOFLOP 4
+#define FID_MONOFLOP_DONE 5
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 } __attribute__((__packed__)) StandardMessage;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	bool relay1;
 	bool relay2;
 } __attribute__((__packed__)) Set;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 } __attribute__((__packed__)) Get;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	bool relay1;
 	bool relay2;
 } __attribute__((__packed__)) GetReturn;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	uint8_t relay;
 	bool state;
 	uint32_t time;
 } __attribute__((__packed__)) SetMonoflop;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	uint8_t relay;
 } __attribute__((__packed__)) GetMonoflop;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	bool state;
 	uint32_t time;
 	uint32_t time_remaining;
 } __attribute__((__packed__)) GetMonoflopReturn;
 
 typedef struct {
-	uint8_t stack_id;
-	uint8_t type;
-	uint16_t length;
+	MessageHeader header;
 	uint8_t relay;
 	bool state;
 } __attribute__((__packed__)) MonoflopDone;
 
-void set(uint8_t com, Set *data);
-void get(uint8_t com, Get *data);
-void set_monoflop(uint8_t com, SetMonoflop *data);
-void get_monoflop(uint8_t com, GetMonoflop *data);
+void set(const ComType com, const Set *data);
+void get(const ComType com, const Get *data);
+void set_monoflop(const ComType com, const SetMonoflop *data);
+void get_monoflop(const ComType com, const GetMonoflop *data);
 
-void invocation(uint8_t com, uint8_t *data);
+void invocation(const ComType com, const uint8_t *data);
 void constructor(void);
 void destructor(void);
-void tick(uint8_t tick_type);
+void tick(const uint8_t tick_type);
 
 #endif
