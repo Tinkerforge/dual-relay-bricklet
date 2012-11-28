@@ -11,11 +11,11 @@ from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_dual_relay import DualRelay
 
 if __name__ == "__main__":
-    ipcon = IPConnection(HOST, PORT) # Create IP connection to brickd
+    ipcon = IPConnection() # Create IP connection
+    dr = DualRelay(UID, ipcon) # Create device object
 
-    dr = DualRelay(UID) # Create device object
-    ipcon.add_device(dr) # Add device to IP connection
-    # Don't use device before it is added to a connection
+    ipcon.connect(HOST, PORT) # Connect to brickd
+    # Don't use device before ipcon is connected
 
     # Turn relays alternating on/off for 10 times with 1 second delay
     for i in range(10):
@@ -26,4 +26,3 @@ if __name__ == "__main__":
             dr.set_state(False, True)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
-    ipcon.destroy()
