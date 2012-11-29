@@ -91,7 +91,7 @@ void get(const ComType com, const Get *data) {
 
 void set_monoflop(const ComType com, const SetMonoflop *data) {
 	if(data->relay != 1 && data->relay != 2) {
-		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(MessageHeader));
+		BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}
 
@@ -121,7 +121,7 @@ void set_monoflop(const ComType com, const SetMonoflop *data) {
 
 void get_monoflop(const ComType com, const GetMonoflop *data) {
 	if(data->relay != 1 && data->relay != 2) {
-		BA->com_return_error(data, com, MESSAGE_ERROR_CODE_INVALID_PARAMETER, sizeof(GetMonoflopReturn));
+		BA->com_return_error(data, sizeof(GetMonoflopReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}
 
