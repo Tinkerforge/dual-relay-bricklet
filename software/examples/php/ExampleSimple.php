@@ -10,11 +10,11 @@ $host = 'localhost';
 $port = 4223;
 $uid = '6hL'; // Change to your UID
 
-$ipcon = new IPConnection($host, $port); // Create IP connection to brickd
-$dr = new BrickletDualRelay($uid); // Create device object
+$ipcon = new IPConnection(); // Create IP connection
+$dr = new BrickletDualRelay($uid, $ipcon); // Create device object
 
-$ipcon->addDevice($dr); // Add device to IP connection
-// Don't use device before it is added to a connection
+$ipcon->connect($host, $port); // Connect to brickd
+// Don't use device before ipcon is connected
 
 // Turn relays alternating on/off for 10 times with 1 second delay
 for($i = 0; $i < 10; $i++) {
@@ -29,6 +29,5 @@ for($i = 0; $i < 10; $i++) {
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));
-$ipcon->destroy();
 
 ?>
