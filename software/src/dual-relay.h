@@ -1,5 +1,5 @@
 /* dual-relay
- * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * dual-relay.h: Implementation of Dual Relay Bricklet messages
  *
@@ -30,6 +30,7 @@
 #define FID_SET_MONOFLOP 3
 #define FID_GET_MONOFLOP 4
 #define FID_MONOFLOP_DONE 5
+#define FID_SET_SELECTED_STATE 6
 
 typedef struct {
 	MessageHeader header;
@@ -76,10 +77,17 @@ typedef struct {
 	bool state;
 } __attribute__((__packed__)) MonoflopDone;
 
+typedef struct {
+	MessageHeader header;
+	uint8_t relay;
+	bool state;
+} __attribute__((__packed__)) SetSelectedState;
+
 void set(const ComType com, const Set *data);
 void get(const ComType com, const Get *data);
 void set_monoflop(const ComType com, const SetMonoflop *data);
 void get_monoflop(const ComType com, const GetMonoflop *data);
+void set_selected_state(const ComType com, const SetSelectedState *data);
 
 void invocation(const ComType com, const uint8_t *data);
 void constructor(void);

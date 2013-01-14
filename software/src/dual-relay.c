@@ -1,5 +1,5 @@
 /* dual-relay
- * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * dual-relay.c: Implementation of Dual Relay Bricklet messages
  *
@@ -46,6 +46,11 @@ void invocation(const ComType com, const uint8_t *data) {
 
 		case FID_GET_MONOFLOP: {
 			get_monoflop(com, (GetMonoflop*)data);
+			return;
+		}
+
+		case FID_SET_SELECTED_STATE: {
+			set_selected_state(com, (SetSelectedState*)data);
 			return;
 		}
 
@@ -140,6 +145,31 @@ void get_monoflop(const ComType com, const GetMonoflop *data) {
 	}
 
 	BA->send_blocking_with_timeout(&gfr, sizeof(GetMonoflopReturn), com);
+}
+
+void set_selected_state(const ComType com, const SetSelectedState *data) {
+	if(data->relay == 1) {
+		BC->time[0] = 0;
+		BC->time_remaining[0] = 0;
+		if(data->state) {
+			PIN_RELAY_1.pio->PIO_SODR = PIN_RELAY_1.mask;
+		} else {
+			PIN_RELAY_1.pio->PIO_CODR = PIN_RELAY_1.mask;
+		}
+	} else if(data->relay == 2) {
+		BC->time[1] = 0;
+		BC->time_remaining[1] = 0;
+		if(data->state) {
+			PIN_RELAY_2.pio->PIO_SODR = PIN_RELAY_2.mask;
+		} else {
+			PIN_RELAY_2.pio->PIO_CODR = PIN_RELAY_2.mask;
+		}
+	} else {
+		BA->com_return_error(data, sizeof(GetMonoflopReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+		return;
+	}
+
+	BA->com_return_setter(com, data);
 }
 
 void constructor(void) {
