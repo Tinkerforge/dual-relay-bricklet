@@ -173,6 +173,8 @@ void set_selected_state(const ComType com, const SetSelectedState *data) {
 }
 
 void constructor(void) {
+	_Static_assert(sizeof(BrickContext) <= BRICKLET_CONTEXT_MAX_SIZE, "BrickContext too big");
+
 	BC->time[0] = 0;
 	BC->time[1] = 0;
 	BC->time_remaining[0] = 0;
