@@ -24,6 +24,7 @@ var
   e: TExample;
 
 procedure TExample.Execute;
+var i: integer;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -35,8 +36,17 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Turn relay 1 on and relay 2 off. }
-  dr.SetState(true, false);
+  { Turn relays alternating on/off for 10 times with 1 second delay }
+  for i := 0 to 9 do begin
+    Sleep(1000);
+
+    if (i mod 2 = 1) then begin
+      dr.SetState(true, false);
+    end
+    else begin
+      dr.SetState(false, true);
+    end;
+  end;
 
   WriteLn('Press key to exit');
   ReadLn;
