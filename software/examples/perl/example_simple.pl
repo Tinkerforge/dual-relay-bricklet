@@ -1,0 +1,34 @@
+#!/usr/bin/perl  
+
+use Tinkerforge::IPConnection;
+use Tinkerforge::BrickletDualRelay;
+
+use constant HOST => 'localhost';
+use constant PORT => 4223;
+use constant UID => 'joQ'; # Change to your UID
+
+my $ipcon = IPConnection->new(); # Create IP connection
+my $dr = BrickletDualRelay->new(&UID, $ipcon); # Create device object
+
+$ipcon->connect(&HOST, &PORT); # Connect to brickd
+# Don't use device before ipcon is connected
+
+# Turn relays alternating on/off for 10 times with 1 second delay
+for (my $i = 1; $i < 11; $i++)
+{
+    sleep(1);
+    
+    if ($i % 2)
+    {
+        $dr->set_state(1, 0);
+    }    
+    else
+    {
+        $dr->set_state(0, 1);
+    }
+}
+
+print "\nPress any key to exit...\n";
+<STDIN>;
+$ipcon->disconnect();
+
