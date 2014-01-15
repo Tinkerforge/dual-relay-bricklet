@@ -6,14 +6,14 @@ require_once('Tinkerforge/BrickletDualRelay.php');
 use Tinkerforge\IPConnection;
 use Tinkerforge\BrickletDualRelay;
 
-$host = 'localhost';
-$port = 4223;
-$uid = '6hL'; // Change to your UID
+const HOST = 'localhost';
+const PORT = 4223;
+const UID = '6hL'; // Change to your UID
 
 $ipcon = new IPConnection(); // Create IP connection
-$dr = new BrickletDualRelay($uid, $ipcon); // Create device object
+$dr = new BrickletDualRelay(UID, $ipcon); // Create device object
 
-$ipcon->connect($host, $port); // Connect to brickd
+$ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
 // Turn relays alternating on/off for 10 times with 1 second delay
