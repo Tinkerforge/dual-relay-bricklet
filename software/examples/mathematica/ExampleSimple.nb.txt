@@ -1,0 +1,25 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="fBk"(* Change to your UID *)
+
+(* Create IPConnection and device object *)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+dr=NETNew["Tinkerforge.BrickletDualRelay",uid,ipcon]
+ipcon@Connect[host,port]
+
+(* Turn relays alternating on/off for 10 times with 1 second delay *)
+For[i=0,i<10,i++,
+ Pause[1];
+ If[OddQ[i],
+  dr@SetState[True,False],
+  dr@SetState[False,True]
+ ]
+]
+
+(* Clean up *)
+ipcon@Disconnect[]
+ReleaseNETObject[dr]
+ReleaseNETObject[ipcon]
