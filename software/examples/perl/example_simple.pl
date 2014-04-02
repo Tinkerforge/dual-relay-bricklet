@@ -28,7 +28,7 @@ for (my $i = 1; $i < 11; $i++)
     }
 }
 
-print "\nPress any key to exit...\n";
+print "Press any key to exit...\n";
 <STDIN>;
 $ipcon->disconnect();
 
