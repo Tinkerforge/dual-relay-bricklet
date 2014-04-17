@@ -22,6 +22,6 @@ function matlab_example_simple
         end
     end
 
-    input('\nPress any key to exit...\n', 's');
+    input('Press any key to exit...\n', 's');
     ipcon.disconnect();
 end
