@@ -14,6 +14,7 @@ function octave_example_simple()
     % Turn relays alternating on/off for 10 times with 1 second delay
     for i = 1:10
         pause(1);
+
         if mod(i, 2)
             dr.setState(true, false);
         else

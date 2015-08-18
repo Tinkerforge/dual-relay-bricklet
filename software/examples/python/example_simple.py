@@ -20,6 +20,7 @@ if __name__ == "__main__":
     # Turn relays alternating on/off for 10 times with 1 second delay
     for i in range(10):
         time.sleep(1)
+
         if i % 2:
             dr.set_state(True, False)
         else:

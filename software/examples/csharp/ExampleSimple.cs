@@ -18,6 +18,7 @@ class Example
 		for(int i = 0; i < 10; i++)
 		{
 			System.Threading.Thread.Sleep(1000);
+
 			if(i % 2 == 0) 
 			{
 				dr.SetState(true, false);

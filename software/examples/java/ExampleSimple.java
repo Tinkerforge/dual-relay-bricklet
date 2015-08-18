@@ -18,6 +18,7 @@ public class ExampleSimple {
 		// Turn relays alternating on/off for 10 times with 1 second delay
 		for(int i = 0; i < 10; i++) {
 			Thread.sleep(1000);
+
 			if(i % 2 == 1) {
 				dr.setState(true, false);
 			} else {

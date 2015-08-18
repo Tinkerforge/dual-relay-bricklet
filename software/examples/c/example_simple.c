@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define IPCON_EXPOSE_MILLISLEEP
+
 #include "ip_connection.h"
 #include "bricklet_dual_relay.h"
 
@@ -23,8 +25,16 @@ int main(void) {
 	}
 	// Don't use device before ipcon is connected
 
-	// Turn relay 1 on and relay 2 off.
-	dual_relay_set_state(&dr, true, false);
+	// Turn relays alternating on/off for 10 times with 1 second delay
+	for(int i = 0; i < 10; ++i) {
+		millisleep(1000);
+
+		if (i % 2 != 0): {
+			dual_relay_set_state(&dr, true, false);
+		} else {
+			dual_relay_set_state(&dr, false, true);
+		}
+	}
 
 	printf("Press key to exit\n");
 	getchar();
