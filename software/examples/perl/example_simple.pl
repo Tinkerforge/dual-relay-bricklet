@@ -1,11 +1,11 @@
-#!/usr/bin/perl  
+#!/usr/bin/perl
 
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletDualRelay;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'joQ'; # Change to your UID
+use constant UID => 'XYZ'; # Change to your UID
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $dr = Tinkerforge::BrickletDualRelay->new(&UID, $ipcon); # Create device object
@@ -31,4 +31,3 @@ for (my $i = 0; $i < 10; $i++)
 print "Press any key to exit...\n";
 <STDIN>;
 $ipcon->disconnect();
-
