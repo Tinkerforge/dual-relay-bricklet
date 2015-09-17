@@ -13,21 +13,15 @@ my $dr = Tinkerforge::BrickletDualRelay->new(&UID, $ipcon); # Create device obje
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Turn relays alternating on/off for 10 times with 1 second delay
-for (my $i = 0; $i < 10; $i++)
+# Turn relays alternating on/off 10 times with 1 second delay
+for (my $i = 0; $i < 5; $i++)
 {
     sleep(1);
-
-    if ($i % 2)
-    {
-        $dr->set_state(1, 0);
-    }    
-    else
-    {
-        $dr->set_state(0, 1);
-    }
+    $dr->set_state(1, 0);
+    sleep(1);
+    $dr->set_state(0, 1);
 }
 
-print "Press any key to exit...\n";
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

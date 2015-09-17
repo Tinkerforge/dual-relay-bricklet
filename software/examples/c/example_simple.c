@@ -25,16 +25,13 @@ int main(void) {
 	}
 	// Don't use device before ipcon is connected
 
-	// Turn relays alternating on/off for 10 times with 1 second delay
+	// Turn relays alternating on/off 10 times with 1 second delay
 	int i;
-	for(i = 0; i < 10; ++i) {
+	for(i = 0; i < 5; ++i) {
 		millisleep(1000);
-
-		if (i % 2 != 0) {
-			dual_relay_set_state(&dr, true, false);
-		} else {
-			dual_relay_set_state(&dr, false, true);
-		}
+		dual_relay_set_state(&dr, true, false);
+		millisleep(1000);
+		dual_relay_set_state(&dr, false, true);
 	}
 
 	printf("Press key to exit\n");

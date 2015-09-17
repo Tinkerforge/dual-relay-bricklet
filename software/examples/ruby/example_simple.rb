@@ -16,15 +16,12 @@ dr = BrickletDualRelay.new UID, ipcon # Create device object
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Turn relays alternating on/off for 10 times with 1 second delay
-for i in 0..9
+# Turn relays alternating on/off 10 times with 1 second delay
+for _ in 0..4
   sleep 1
-
-  if i % 2 == 1
-    dr.set_state true, false
-  else
-    dr.set_state false, true
-  end
+  dr.set_state true, false
+  sleep 1
+  dr.set_state false, true
 end
 
 puts 'Press key to exit'

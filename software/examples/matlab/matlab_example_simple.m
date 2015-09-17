@@ -4,25 +4,21 @@ function matlab_example_simple()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = '9y5'; % Change to your UID
-    
+    UID = 'XYZ'; % Change to your UID
+
     ipcon = IPConnection(); % Create IP connection
     dr = BrickletDualRelay(UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
 
-    % Turn relays alternating on/off for 10 times with 1 second delay
-    for i = 1:10
+    % Turn relays alternating on/off 10 times with 1 second delay
+    for i = 0:4
         pause(1);
-
-        if mod(i, 2)
-            dr.setState(true, false);
-        else
-            dr.setState(false, true);
-        end
+        dr.setState(true, false);
+        pause(1);
+        dr.setState(false, true);
     end
-
-    input('Press any key to exit...\n', 's');
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end

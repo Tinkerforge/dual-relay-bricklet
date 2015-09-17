@@ -36,16 +36,12 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Turn relays alternating on/off for 10 times with 1 second delay }
-  for i := 0 to 9 do begin
+  { Turn relays alternating on/off 10 times with 1 second delay }
+  for i := 0 to 4 do begin
     Sleep(1000);
-
-    if (i mod 2 = 1) then begin
-      dr.SetState(true, false);
-    end
-    else begin
-      dr.SetState(false, true);
-    end;
+    dr.SetState(true, false);
+    Sleep(1000);
+    dr.SetState(false, true);
   end;
 
   WriteLn('Press key to exit');

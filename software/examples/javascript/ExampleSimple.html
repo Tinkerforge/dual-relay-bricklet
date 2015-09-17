@@ -34,20 +34,22 @@
                 var dr = new Tinkerforge.BrickletDualRelay(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
                 ); // Connect to brickd
                 // Don't use device before ipcon is connected
 
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
-                        // Turn relays on/off
-                        dr.setState(true, false);
-                        setTimeout(
-                            function() {
+                    function (connectReason) {
+                        // Turn relays alternating on/off 10 times with 1 second delay
+                        for(var i = 0; i < 5; ++i) {
+                            setTimeout(function () {
+                                dr.setState(true, false);
+                            }, 2000 * i + 1000);
+                            setTimeout(function () {
                                 dr.setState(false, true);
-                            }, 2000
-                        );
+                            }, 2000 * i + 2000);
+                        }
                     }
                 );
             }

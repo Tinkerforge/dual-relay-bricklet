@@ -8,7 +8,7 @@ use Tinkerforge\BrickletDualRelay;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = '6hL'; // Change to your UID
+const UID = 'XYZ'; // Change to your UID
 
 $ipcon = new IPConnection(); // Create IP connection
 $dr = new BrickletDualRelay(UID, $ipcon); // Create device object
@@ -16,15 +16,12 @@ $dr = new BrickletDualRelay(UID, $ipcon); // Create device object
 $ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
-// Turn relays alternating on/off for 10 times with 1 second delay
-for($i = 0; $i < 10; $i++) {
+// Turn relays alternating on/off 10 times with 1 second delay
+for($i = 0; $i < 5; $i++) {
     sleep(1);
-
-    if ($i % 2 == 1) {
-        $dr->setState(TRUE, FALSE);
-    } else {
-        $dr->setState(FALSE, TRUE);
-    }
+    $dr->setState(TRUE, FALSE);
+    sleep(1);
+    $dr->setState(FALSE, TRUE);
 }
 
 echo "Press key to exit\n";

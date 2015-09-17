@@ -1,10 +1,9 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=dbs
+uid=XYZ # Change to your UID
 
-# Turn relays alternating on/off for 10 times with 1 second delay
+# Turn relays alternating on/off 10 times with 1 second delay
 for i in 0 1 2 3 4; do
 	sleep 1
 	tinkerforge call dual-relay-bricklet $uid set-state true false

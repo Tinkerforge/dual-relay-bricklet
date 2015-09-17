@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Tinkerforge;
 
 class Example
@@ -14,23 +16,17 @@ class Example
 		ipcon.Connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Turn relays alternating on/off for 10 times with 1 second delay
-		for(int i = 0; i < 10; i++)
+		// Turn relays alternating on/off 10 times with 1 second delay
+		for(int i = 0; i < 5; i++)
 		{
-			System.Threading.Thread.Sleep(1000);
-
-			if(i % 2 == 0) 
-			{
-				dr.SetState(true, false);
-			} 
-			else
-			{
-				dr.SetState(false, true);
-			}
+			Thread.Sleep(1000);
+			dr.SetState(true, false);
+			Thread.Sleep(1000);
+			dr.SetState(false, true);
 		}
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

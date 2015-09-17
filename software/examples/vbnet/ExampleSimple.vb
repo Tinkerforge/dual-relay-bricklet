@@ -1,3 +1,5 @@
+Imports System
+Imports System.Threading
 Imports Tinkerforge
 
 Module ExampleSimple
@@ -12,21 +14,17 @@ Module ExampleSimple
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
 
-        ' Turn relays alternating on/off for 10 times with 1 second delay
+        ' Turn relays alternating on/off 10 times with 1 second delay
         Dim i As Integer
-
-        For i = 1 To 10
-            System.Threading.Thread.Sleep(1000)
-
-            If i Mod 2 = 0 Then
-                dr.SetState(True, False)
-            Else
-                dr.SetState(False, True)
-            End If
+        For i = 0 To 4
+            Thread.Sleep(1000)
+            dr.SetState(True, False)
+            Thread.Sleep(1000)
+            dr.SetState(False, True)
         Next i
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module
