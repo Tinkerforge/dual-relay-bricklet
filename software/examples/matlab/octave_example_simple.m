@@ -18,6 +18,7 @@ function octave_example_simple()
         pause(1);
         dr.setState(false, true);
     end
+
     input("Press key to exit\n", "s");
     ipcon.disconnect();
 end
