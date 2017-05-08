@@ -3,7 +3,7 @@
   (general
     (links 62)
     (no_connects 0)
-    (area 126.883159 81.480659 172.265341 126.862841)
+    (area 126.220139 80.820139 282.295282 165.089523)
     (thickness 1.6002)
     (drawings 44)
     (tracks 226)
@@ -15,10 +15,11 @@
   (page A4)
   (title_block
     (title "Dual Relay Bricklet")
-    (rev 1.2)
+    (date 2017-05-08)
+    (rev 2.0)
     (company "Tinkerforge GmbH")
     (comment 1 "Licensed under CERN OHL v.1.1")
-    (comment 2 "Copyright (©) 2013, B.Nordmeyer <bastian@tinkerforge.com>")
+    (comment 2 "Copyright (©) 2017, B.Nordmeyer <bastian@tinkerforge.com>")
   )
 
   (layers
@@ -41,7 +42,7 @@
   )
 
   (setup
-    (last_trace_width 0.29972)
+    (last_trace_width 0.24892)
     (user_trace_width 0.29972)
     (user_trace_width 0.59944)
     (user_trace_width 0.8001)
