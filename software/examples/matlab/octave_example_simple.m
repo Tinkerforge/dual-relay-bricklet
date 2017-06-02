@@ -5,8 +5,8 @@ function octave_example_simple()
     PORT = 4223;
     UID = "XYZ"; % Change XYZ to the UID of your Dual Relay Bricklet
 
-    ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
-    dr = java_new("com.tinkerforge.BrickletDualRelay", UID, ipcon); % Create device object
+    ipcon = javaObject("com.tinkerforge.IPConnection"); % Create IP connection
+    dr = javaObject("com.tinkerforge.BrickletDualRelay", UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
