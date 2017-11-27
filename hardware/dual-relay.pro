@@ -1,4 +1,4 @@
-update=Mi 26 Apr 2017 12:09:08 CEST
+update=Mo 27 Nov 2017 16:32:50 CET
 version=1
 last_client=kicad
 [cvpcb]
@@ -49,7 +49,7 @@ LibName12=standard
 LibName13=Logo
 [eeschema]
 version=1
-LibDir=kicad-libraries.pretty
+LibDir=../../dust-detector-bricklet/hardware/kicad-libraries
 [eeschema/libraries]
 LibName1=tinkerforge
 LibName2=power
