@@ -1,111 +1,31 @@
-(*CacheID: 234*)
-(* Internal cache information:
-NotebookFileLineBreakTest
-NotebookFileLineBreakTest
-NotebookDataPosition[         0,          0]
-NotebookDataLength[      4191,        110]
-NotebookOptionsPosition[      3766,         89]
-NotebookOutlinePosition[      4099,        104]
-CellTagsIndexPosition[      4056,        101]
-WindowFrame->Normal*)
-
-(* Beginning of Notebook Content *)
 Notebook[{
-Cell[BoxData[{
- RowBox[{"Needs", "[", "\"\<NETLink`\>\"", "]"}], "\[IndentingNewLine]", 
- RowBox[{"LoadNETAssembly", "[", 
-  RowBox[{"\"\<Tinkerforge\>\"", ",", 
-   RowBox[{
-    RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../../..\>\""}]}], 
-  "]"}]}], "Input",
- CellChangeTimes->{{3.600499894952774*^9, 3.6004998955119457`*^9}, {
-   3.600500032453238*^9, 3.6005000362275877`*^9}, 3.600500114918405*^9, 
-   3.600689745236597*^9}],
-
-Cell[BoxData[{
- RowBox[{"host", "=", "\"\<localhost\>\""}], "\n", 
- RowBox[{"port", "=", "4223"}], "\n", 
- RowBox[{
-  RowBox[{"uid", "=", "\"\<XYZ\>\""}], 
-  RowBox[{"(*", 
-   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], "\n", 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{
-   "Create", " ", "IPConnection", " ", "and", " ", "device", " ", "object"}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"ipcon", "=", 
-  RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}], "\n", 
- RowBox[{"dr", "=", 
-  RowBox[{"NETNew", "[", 
-   RowBox[{
-   "\"\<Tinkerforge.BrickletDualRelay\>\"", ",", "uid", ",", "ipcon"}], 
-   "]"}]}], "\n", 
- RowBox[{
-  RowBox[{"ipcon", "@", 
-   RowBox[{"Connect", "[", 
-    RowBox[{"host", ",", "port"}], "]"}]}], "\n", "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{"Turn", " ", "relays", " ", "alternating", " ", 
-    RowBox[{"on", "/", "off"}], " ", "for", " ", "10", " ", "times", " ", 
-    "with", " ", "1", " ", "second", " ", "delay"}], 
-   "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"For", "[", 
-   RowBox[{
-    RowBox[{"i", "=", "0"}], ",", 
-    RowBox[{"i", "<", "5"}], ",", 
-    RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
-    RowBox[{
-     RowBox[{"Pause", "[", "1", "]"}], ";", "\[IndentingNewLine]", 
-     RowBox[{"dr", "@", 
-      RowBox[{"SetState", "[", 
-       RowBox[{"True", ",", "False"}], "]"}]}], ";", "\[IndentingNewLine]", 
-     RowBox[{"Pause", "[", "1", "]"}], ";", "\[IndentingNewLine]", 
-     RowBox[{"dr", "@", 
-      RowBox[{"SetState", "[", 
-       RowBox[{"False", ",", "True"}], "]"}]}]}]}], "\[IndentingNewLine]", 
-   "]"}], "\[IndentingNewLine]", "\n", 
-  RowBox[{"(*", 
-   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"ipcon", "@", 
-  RowBox[{"Disconnect", "[", "]"}]}], "\n", 
- RowBox[{"ReleaseNETObject", "[", "dr", "]"}], "\n", 
- RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]}], "Input",
- CellChangeTimes->{{3.600075175574196*^9, 3.600075177574486*^9}, {
-   3.600075518821967*^9, 3.60007554243471*^9}, {3.600075580562348*^9, 
-   3.600075669308506*^9}, {3.600075705822371*^9, 3.600075921974015*^9}, {
-   3.6000760067507343`*^9, 3.600076009622583*^9}, {3.600077792659996*^9, 
-   3.600077795613958*^9}, {3.600077854705127*^9, 3.600077855342334*^9}, {
-   3.600090981053762*^9, 3.6000909897413397`*^9}, {3.600091048393783*^9, 
-   3.600091071325759*^9}, {3.6000911068928633`*^9, 3.6000911072763557`*^9}, {
-   3.600091413237206*^9, 3.600091428847453*^9}, {3.600091480127982*^9, 
-   3.60009150669311*^9}, {3.6000915673213387`*^9, 3.6000915678002653`*^9}, {
-   3.600092307925643*^9, 3.600092314241997*^9}, {3.6001611907725573`*^9, 
-   3.600161213439896*^9}, {3.600499885948357*^9, 3.600499975506413*^9}, 
-   3.600500047054912*^9, {3.600500125104067*^9, 3.600500125468691*^9}, {
-   3.600689763326919*^9, 3.600689763688539*^9}, {3.651468579386302*^9, 
-   3.651468587182496*^9}}]
-},
-WindowSize->{1521, 867},
-WindowMargins->{{272, 125}, {75, Automatic}},
-FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
-StyleDefinitions->"Default.nb"
-]
-(* End of Notebook Content *)
-
-(* Internal cache information *)
-(*CellTagsOutline
-CellTagsIndex->{}
-*)
-(*CellTagsIndex
-CellTagsIndex->{}
-*)
-(*NotebookFileOutline
-Notebook[{
-Cell[400, 13, 437, 9, 55, "Input"],
-Cell[840, 24, 2922, 63, 473, "Input"]
-}
-]
-*)
-
+ Cell[
+  BoxData[{
+   RowBox[{"Needs", "[", "\"\<NETLink`\>\"", "]"}],
+   RowBox[{"LoadNETAssembly", "[", RowBox[{"\"\<Tinkerforge\>\"", ",", RowBox[{RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../../..\>\""}]}], "]"}]
+  }], "Input"
+ ],
+ Cell[
+  BoxData[{
+   RowBox[{"host", "=", "\"\<localhost\>\""}],
+   RowBox[{"port", "=", "4223"}],
+   RowBox[{"uid", "=", "\"\<XYZ\>\"", RowBox[{"(*", "Change XYZ to the UID of your Dual Relay Bricklet", "*)"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Create IPConnection and device object", "*)"}],
+   RowBox[{"ipcon", "=", RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}],
+   RowBox[{"dr", "=", RowBox[{"NETNew", "[", RowBox[{"\"\<Tinkerforge.BrickletDualRelay\>\"", ",", "uid", ",", "ipcon"}], "]"}]}],
+   RowBox[{"ipcon", "@", RowBox[{"Connect", "[", RowBox[{"host", ",", "port"}], "]"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Turn relays alternating on/off 10 times with 1 second delay", "*)"}],
+   RowBox[{"For", "[", RowBox[{RowBox[{"i", "=", "0"}], ",", RowBox[{"i", "<", "5"}], ",", RowBox[{"i", "++"}], ",", RowBox[{"\[IndentingNewLine]", RowBox[{"Pause", "[", "1", "]"}], ";", "\[IndentingNewLine]", "dr", "@", RowBox[{"SetState", "[", RowBox[{"True", ",", "False"}], "]"}], ";", "\[IndentingNewLine]", RowBox[{"Pause", "[", "1", "]"}], ";", "\[IndentingNewLine]", "dr", "@", RowBox[{"SetState", "[", RowBox[{"False", ",", "True"}], "]"}], "\[IndentingNewLine]"}]}], "]"}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Clean up", "*)"}],
+   RowBox[{"ipcon", "@", RowBox[{"Disconnect", "[", "]"}]}],
+   RowBox[{"ReleaseNETObject", "[", "dr", "]"}],
+   RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]
+  }], "Input"
+ ]
+}]
