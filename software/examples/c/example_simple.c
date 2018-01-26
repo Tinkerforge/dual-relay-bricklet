@@ -1,6 +1,6 @@
-#include <stdio.h>
-
 #define IPCON_EXPOSE_MILLISLEEP
+
+#include <stdio.h>
 
 #include "ip_connection.h"
 #include "bricklet_dual_relay.h"
