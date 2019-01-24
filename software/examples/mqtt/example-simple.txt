@@ -1,0 +1,12 @@
+
+
+# Change XYZ to the UID of your Dual Relay Bricklet
+
+setup:
+	# Turn relays alternating on/off 10 times with 1 second delay
+	for i in 0 1 2 3 4; do
+		wait for 1s 
+		publish '{"relay1": true, "relay2": false}' to tinkerforge/request/dual_relay_bricklet/XYZ/set_state 
+		wait for 1s 
+		publish '{"relay1": false, "relay2": true}' to tinkerforge/request/dual_relay_bricklet/XYZ/set_state 
+	done
