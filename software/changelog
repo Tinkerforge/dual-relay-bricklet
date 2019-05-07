@@ -9,3 +9,6 @@
 
 2013-01-14: 2.0.0 (143740e)
 - Support for Protocol 2.0
+
+2019-05-07: 2.0.1 (<unknown>)
+- Don't clear monoflop time on monoflop abort to match documentation

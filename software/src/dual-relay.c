@@ -74,8 +74,6 @@ void set(const ComType com, const Set *data) {
 		PIN_RELAY_2.pio->PIO_CODR = PIN_RELAY_2.mask;
 	}
 
-	BC->time[0] = 0;
-	BC->time[1] = 0;
 	BC->time_remaining[0] = 0;
 	BC->time_remaining[1] = 0;
 
@@ -149,7 +147,6 @@ void get_monoflop(const ComType com, const GetMonoflop *data) {
 
 void set_selected_state(const ComType com, const SetSelectedState *data) {
 	if(data->relay == 1) {
-		BC->time[0] = 0;
 		BC->time_remaining[0] = 0;
 		if(data->state) {
 			PIN_RELAY_1.pio->PIO_SODR = PIN_RELAY_1.mask;
@@ -157,7 +154,6 @@ void set_selected_state(const ComType com, const SetSelectedState *data) {
 			PIN_RELAY_1.pio->PIO_CODR = PIN_RELAY_1.mask;
 		}
 	} else if(data->relay == 2) {
-		BC->time[1] = 0;
 		BC->time_remaining[1] = 0;
 		if(data->state) {
 			PIN_RELAY_2.pio->PIO_SODR = PIN_RELAY_2.mask;
