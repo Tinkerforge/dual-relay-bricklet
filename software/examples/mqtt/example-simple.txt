@@ -2,7 +2,7 @@
 
 setup:
 	# Turn relays alternating on/off 10 times with 1 second delay
-	for i in 0 1 2 3 4; do
+	for i in 0..4
 
 		wait for 1s
 
@@ -12,4 +12,4 @@ setup:
 
 		publish '{"relay1": false, "relay2": true}' to tinkerforge/request/dual_relay_bricklet/XYZ/set_state
 
-	done
+	endfor
